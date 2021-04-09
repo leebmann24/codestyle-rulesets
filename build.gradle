@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group 'com.leebmann24'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    from("${rootDir}/config") {
+        include  '**/*.xml'
+        into('config')
+    }
+
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifactId = "codestyle-rulesets"
+        }
+    }
+}
