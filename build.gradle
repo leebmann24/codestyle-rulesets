@@ -22,7 +22,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/")
+            url = uri("https://maven.pkg.github.com/leebmann24/codestyle-rulesets")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
