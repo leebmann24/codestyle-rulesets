@@ -11,9 +11,9 @@ repositories {
 }
 
 jar {
-    from("${rootDir}/config") {
+    from("${rootDir}/configs") {
         include  '**/*.xml'
-        into('config')
+        into('configs')
     }
 
 }
