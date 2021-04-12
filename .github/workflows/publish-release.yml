@@ -32,9 +32,6 @@ jobs:
       - name: Use JFrog CLI
         uses: jfrog/setup-jfrog-cli@v1
 
-      - name: JFrog Authentication
-        run: jfrog c add ${ secrets.JFROG_TOKEN }
-
       - name: Config Gradle
         run: jfrog rt gradle-config
 
@@ -46,7 +43,9 @@ jobs:
       - name: Publish on JFrog
         run:  |
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          jfrog rt bp codestyle-rulesets $NEW_VERSION --url https://leebmann24.jfrog.io/artifactory/codestyle-rulesets/
+          jfrog rt bp codestyle-rulesets $NEW_VERSION \
+            --url https://leebmann24.jfrog.io/artifactory/codestyle-rulesets/ \
+            --access-token ${ secrets.JFROG_TOKEN }
 
 #      - name: Publish artifact
 #        env:
