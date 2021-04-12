@@ -45,7 +45,7 @@ jobs:
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
           jfrog rt bp codestyle-rulesets $NEW_VERSION \
             --url https://leebmann24.jfrog.io/artifactory/codestyle-rulesets/ \
-            --access-token ${ secrets.JFROG_TOKEN }
+            --access-token ${{ secrets.JFROG_TOKEN }}
 
 #      - name: Publish artifact
 #        env:
