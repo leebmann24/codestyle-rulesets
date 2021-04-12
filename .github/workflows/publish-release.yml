@@ -32,6 +32,9 @@ jobs:
       - name: Use JFrog CLI
         uses: jfrog/setup-jfrog-cli@v1
 
+      - name: JFrog Authentication
+        run: jfrog c add ${ secrets.JFROG_TOKEN }
+
       - name: Config Gradle
         run: jfrog rt gradle-config
 
