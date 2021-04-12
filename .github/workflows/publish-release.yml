@@ -18,6 +18,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+
+
     steps:
 
       - name: Checkout Code
@@ -43,7 +46,7 @@ jobs:
       - name: Publish on JFrog
         run:  |
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          jfrog rt bp codestyle-rulesets $NEW_VERSION
+          jfrog rt bp codestyle-rulesets $NEW_VERSION --url https://leebmann24.jfrog.io/artifactory/codestyle-rulesets/
 
 #      - name: Publish artifact
 #        env:
