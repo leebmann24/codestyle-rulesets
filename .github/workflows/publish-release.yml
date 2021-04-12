@@ -32,13 +32,18 @@ jobs:
       - name: Use JFrog CLI
         uses: jfrog/setup-jfrog-cli@v1
 
-      - name: Publish on JFrog
-        run: | 
+      - name: Config Gradle
+        run: jfrog rt gradle-config
+
+      - name: Prepare for JFrog
+        run: |
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          jfrog rt gradle-config
+          jfrog rt gradle clean artifactoryPublish -b build.gradle --build-name codestyle-rulesets --build-number $NEW_VERSION
 
-# jfrog rt gradle clean artifactoryPublish -b build.gradle --build-name $GITHUB_WORKSPACE --build-number $NEW_VERSION
-
+      - name: Publish on JFrog
+        run:  |
+          NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
+          jfrog rt bp codestyle-rulesets $NEW_VERSION
 
 #      - name: Publish artifact
 #        env:
