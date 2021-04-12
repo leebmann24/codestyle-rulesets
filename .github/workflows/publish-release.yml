@@ -23,12 +23,19 @@ jobs:
           java-version: '15'
           distribution: 'adopt'
 
-      - name: Publish artifact
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          GITHUB_ACTOR: ${{ secrets.ACTOR }}
-        run: |
+      - name: Publish on JFrog
+        uses: jfrog/setup-jfrog-cli@v1
+        run: | 
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          echo "New version: ${NEW_VERSION}"
-          echo "Github username: ${GITHUB_ACTOR}"
-          ./gradlew -Pversion=${NEW_VERSION} publish
+          jfrog rt gradle-config
+
+
+#      - name: Publish artifact
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+#          GITHUB_ACTOR: ${{ secrets.ACTOR }}
+#        run: |
+#          NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
+#          echo "New version: ${NEW_VERSION}"
+#          echo "Github username: ${GITHUB_ACTOR}"
+#          ./gradlew -Pversion=${NEW_VERSION} publish
