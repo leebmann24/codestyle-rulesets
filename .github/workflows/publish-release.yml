@@ -29,30 +29,11 @@ jobs:
           java-version: '15'
           distribution: 'adopt'
 
-      - name: Use JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v1
-
-      - name: Config Gradle
-        run: jfrog rt gradle-config
-
-      - name: Prepare for JFrog
+      - name: Publish artifact
+        env:
+          JFROG_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+          JFROG_USER: ${{ secrets.REGISTRY_USER }}
         run: |
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          jfrog rt gradle clean artifactoryPublish -b build.gradle --build-name codestyle-rulesets --build-number $NEW_VERSION
-
-      - name: Publish on JFrog
-        run:  |
-          NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-          jfrog rt bp codestyle-rulesets $NEW_VERSION \
-            --url https://leebmann24.jfrog.io/artifactory/codestyle-rulesets/ \
-            --access-token ${{ secrets.JFROG_TOKEN }}
-
-#      - name: Publish artifact
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-#          GITHUB_ACTOR: ${{ secrets.ACTOR }}
-#        run: |
-#          NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
-#          echo "New version: ${NEW_VERSION}"
-#          echo "Github username: ${GITHUB_ACTOR}"
-#          ./gradlew -Pversion=${NEW_VERSION} publish
+          echo "New version: ${NEW_VERSION}"
+          ./gradlew -Pversion=${NEW_VERSION} publish
