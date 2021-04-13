@@ -4,14 +4,9 @@
 name: Java CI with Gradle
 
 on:
-  release:
-    types: [ published ]
-
-
-  # just for testing
   push:
     branches:
-      - publish-on-jfrog
+      - main
 
 jobs:
   build:
