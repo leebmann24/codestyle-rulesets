@@ -7,6 +7,12 @@ on:
   release:
     types: [ published ]
 
+
+  # just for testing
+  push:
+    branches:
+      - publish-on-jfrog
+
 jobs:
   build:
 
@@ -25,10 +31,9 @@ jobs:
 
       - name: Publish artifact
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
-          GITHUB_ACTOR: ${{ secrets.ACTOR }}
+          JFROG_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+          JFROG_USER: ${{ secrets.REGISTRY_USER }}
         run: |
           NEW_VERSION=$(echo "${GITHUB_REF}" | cut -d "/" -f3)
           echo "New version: ${NEW_VERSION}"
-          echo "Github username: ${GITHUB_ACTOR}"
           ./gradlew -Pversion=${NEW_VERSION} publish

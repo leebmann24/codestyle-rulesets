@@ -21,11 +21,11 @@ jar {
 publishing {
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/leebmann24/codestyle-rulesets")
+            name = "L24Artifactory"
+            url = uri("https://leebmann24.jfrog.io/artifactory/maven-public/")
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = System.getenv("JFROG_USER")
+                password = System.getenv("JFROG_TOKEN")
             }
         }
     }
